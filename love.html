@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Love Universe</title>
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    background: black;
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: phoneScroll 20s infinite ease-in-out;
+  }
+  @keyframes phoneScroll {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(15px, -15px); }
+    50%  { transform: translate(30px, 10px); }
+    75%  { transform: translate(15px, 15px); }
+    100% { transform: translate(0, 0); }
+  }
+  .floating-text {
+    position: absolute;
+    font-weight: bold;
+    color: hsl(calc(330 + 30 * var(--rand)), 80%, 75%);
+    text-shadow:
+      0 0 8px hsl(calc(330 + 30 * var(--rand)), 100%, 80%),
+      0 0 12px hsl(calc(330 + 30 * var(--rand)), 100%, 85%);
+    animation: floatText 12s linear infinite;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0.9;
+  }
+  @keyframes floatText {
+    0% { transform: translateY(100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+  }
+  .heart {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #db4c79;
+    transform: rotate(45deg);
+    animation: fallHeart 8s linear infinite;
+    border-radius: 3px;
+    box-shadow: 0 0 8px #db4c79;
+  }
+  .heart:before,
+  .heart:after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #db4c79;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #db4c79;
+  }
+  .heart:before { top: -8px; left: 0; }
+  .heart:after  { left: -8px; top: 0; }
+  @keyframes fallHeart {
+    0% { transform: translateY(-120px) rotate(45deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+  }
+  .snowflake {
+    position: absolute;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: snowFall 16s linear infinite;
+  }
+  @keyframes snowFall {
+    0% { transform: translateY(0px) translateX(0); opacity: 0.3; }
+    50% { transform: translateX(10px); }
+    100% { transform: translateY(100vh) translateX(0); opacity: 0; }
+  }
+  .shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, #ffdee9, transparent);
+    border-radius: 2px;
+    opacity: 0.4;
+    transform-origin: left center;
+    animation: shootingStar 6s ease-out forwards;
+    box-shadow: 0 0 12px #ff99cc;
+    filter: blur(1.5px);
+  }
+  @keyframes shootingStar {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) rotate(20deg) scale(1);
+    }
+    25% {
+      transform: translate(25vw, 12vh) rotate(15deg) scale(0.9);
+    }
+    50% {
+      transform: translate(50vw, 22vh) rotate(10deg) scale(0.8);
+    }
+    75% {
+      transform: translate(75vw, 32vh) rotate(5deg) scale(0.7);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(100vw, 45vh) rotate(0deg) scale(0.6);
+    }
+  }
+</style>
+</head>
+<body>
+<script>
+  const messages = [
+    "Anh yêu em", "Em yêu anh", "Nhớ em nhiều lắm", "Cưng à", "Em là duy nhất", "Mãi mãi bên nhau",
+    "Mãi yêu anh", "Muốn ở bên em", "Trái tim của anh là của em", "Anh luôn nghĩ về em",
+    "Em là cả thế giới của anh", "Yêu em nhiều hơn mọi điều",
+    "我爱你", "宝贝我想你", "你是我心里唯一", "亲亲~", "一直爱你",
+    "想和你在一起", "你是我的全部", "我的心属于你", "我永远爱你",
+    "你是我的唯一", "爱你无止境",
+    "愛してる", "大好きだよ", "ずっと一緒に", "君しかいない", "チュ〜", "そばにいてね",
+    "君は僕のすべて", "永遠に愛してる", "君と一緒にいたい", "いつも君を想ってる",
+    "君が大好き"
+  ];
+
+  function createFloatingText() {
+    const text = document.createElement("div");
+    text.className = "floating-text";
+    text.innerText = messages[Math.floor(Math.random() * messages.length)];
+    text.style.left = Math.random() * window.innerWidth + "px";
+    text.style.animationDuration = (12 + Math.random() * 6) + "s";
+    text.style.fontSize = (16 + Math.random() * 6) + "px";
+    text.style.setProperty('--rand', Math.random());
+    document.body.appendChild(text);
+    setTimeout(() => text.remove(), 19000);
+  }
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.animationDuration = (7 + Math.random() * 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 9000);
+  }
+
+  function createSnowflake() {
+    const snow = document.createElement("div");
+    snow.className = "snowflake";
+    snow.style.left = Math.random() * window.innerWidth + "px";
+    snow.style.animationDuration = (14 + Math.random() * 8) + "s";
+    document.body.appendChild(snow);
+    setTimeout(() => snow.remove(), 16000);
+  }
+
+  function createShootingStar() {
+    const star = document.createElement("div");
+    const length = 60 + Math.random() * 100;
+    star.className = "shooting-star";
+    star.style.width = length + "px";
+    star.style.top = Math.random() * window.innerHeight / 2 + "px";
+    star.style.left = Math.random() * window.innerWidth / 2 + "px";
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 6500);
+  }
+
+  setInterval(createFloatingText, 120);
+  setInterval(createHeart, 250);
+  setInterval(createSnowflake, 60);
+  setInterval(() => {
+    if (Math.random() < 0.9) createShootingStar();
+  }, 900);
+</script>
+</body>
+</html>
